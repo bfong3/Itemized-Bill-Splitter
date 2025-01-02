@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Receipt App</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Get Started Screen (Screen 0) -->
+    <div id="screen0">
+        <h1>Welcome to the Split Bill Tool!</h1>
+        <p>This tool allows for you and your group to split the bill perfectly; whether everyone got their own thing or only some people shared select dishes. Click "Start" to begin.</p>
+        <button id="startButton">Start</button>
+    </div>
+
+    <!-- Screen 1: Number of People -->
+    <div id="screen1" style="display: none;">
+        <h1>Enter the Number of People</h1>
+        <input type="number" id="numPeople" placeholder="Enter a number (1-16)" min="1" max="16">
+        <button class="backButton" id="backButton1">Back</button>
+        <button class="nextButton" id="nextButton1">Next</button>
+    </div>
+
+    <!-- Screen 2: Add Names of Everyone -->
+    <div id="screen2" style="display: none;">
+        <h1>Enter Everyone's Name</h1>
+        <input type="text" id="nameInput" placeholder="Enter a name">
+        <button class="nextButton" id="addNameButton">Add Name</button>
+        
+        <h2>Names List:</h2>
+        <ul id="namesList"></ul> <!-- This is where the names will be displayed -->
+
+        <button class="backButton" id="backButton2">Back</button>
+        <button class="nextButton" id="nextButton2">Next</button>
+    </div>
+
+    <!-- Screen 3: Manually or Image -->
+    <div id="screen3" style="display: none;">
+        <h1>This is a filler screen for when I added manually adding or uploading. Just press Next</h1>
+
+        <button class="backButton" id="backButton3">Back</button>
+        <button class="nextButton" id="nextButton3">Next</button>
+    </div>
+
+    <!-- Screen 4: Add Items -->
+    <div id="screen4" style="display: none;">
+        <h1>Add Items</h1>
+    
+        <!-- Table for displaying items -->
+        <table id="itemsTable">
+            <thead>
+                <tr>
+                    <th>Item Name</th>
+                    <th>Number of Items</th>
+                    <th>Price</th>
+                    <th>People</th>
+                    <th style="display:none;">Actions</th>
+                </tr>
+            </thead>
+            <tbody id="itemsList">
+                <!-- Dynamically populated list of items will go here -->
+            </tbody>
+        </table>
+
+        <!-- Button to add a new item -->
+        <button id="addItemButton">Add Item</button>
+    </div>
+
+    <!-- Modal for adding/editing an item -->
+    <div id="itemModal" class="modal" style="display:none;">
+        <div class="modal-content">
+            <h2>Item Details</h2>
+            
+            <label for="itemName">Item Name</label>
+            <input type="text" id="itemName" placeholder="Enter item name">
+    
+            <label for="numItems">Number of Items</label>
+            <input type="number" id="numItems" placeholder="Enter number of items" min="1">
+    
+            <label for="itemPrice">Price</label>
+            <input type="number" id="itemPrice" placeholder="Enter item price">
+    
+            <label for="names">Select Names</label>
+            <div id="namesSelection">
+                <!-- Dynamically populated list of names will go here -->
+            </div>
+    
+            <button id="saveItemButton">Save</button>
+            <button id="cancelItemButton">Cancel</button>
+        </div>
+    </div>
+    <script src="app.js"></script>
+</body>
+</html>

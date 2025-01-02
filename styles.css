@@ -1,0 +1,113 @@
+/* Simple styling for clarity */
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    margin: 0;
+    background-color: #f4f4f4;
+}
+
+div {
+    text-align: center;
+}
+
+#screen0, #screen1, #screen2, #screen3{
+    display: block;
+}
+
+input, button {
+    margin: 10px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+input {
+    width: 200px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+/* Style for table */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+th, td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+#itemModal {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+}
+
+input {
+    margin-bottom: 10px;
+    padding: 8px;
+}
+
+#cancelItemButton {
+    background-color: #f44336;
+}
+
+#cancelItemButton:hover {
+    background-color: #e53935;
+}
+
+#namesSelection {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.name-pill {
+    padding: 5px 10px;
+    border: 1px solid #ddd;
+    border-radius: 50px;
+    cursor: pointer;
+}
+
+.name-pill.selected {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.name-pill:hover {
+    background-color: #f0f0f0;
+}
