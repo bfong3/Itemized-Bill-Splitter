@@ -52,8 +52,8 @@
         <table id="itemsTable">
             <thead>
                 <tr>
-                    <th>Item Name</th>
-                    <th>Number of Items</th>
+                    <th>Item</th>
+                    <th>Quantity</th>
                     <th>Price</th>
                     <th>People</th>
                     <th style="display:none;">Actions</th>
@@ -66,6 +66,12 @@
 
         <!-- Button to add a new item -->
         <button id="addItemButton">Add Item</button>
+
+        <div style="margin-top: 20px;">
+            <button class="backButton" id="backButton4">Back</button>
+            <button class="nextButton" id="nextButton4">Next</button>
+        </div>
+
     </div>
 
     <!-- Modal for adding/editing an item -->
@@ -91,6 +97,55 @@
             <button id="cancelItemButton">Cancel</button>
         </div>
     </div>
+
+    <!-- Modal for adding tax and tip -->
+    <div id="taxTipModal" class="modal-backdrop" style="display:none;">
+        <div class="modal-container">
+            <h2>Enter Tax and Tip</h2>
+        
+            <label for="taxAmount">Tax Amount ($):</label>
+            <input type="number" id="taxAmount" placeholder="Enter tax amount" min="0" value="0">
+        
+            <label for="tipAmount">Tip Amount ($):</label>
+            <input type="number" id="tipAmount" placeholder="Enter tip amount" min="0" value="0">
+        
+            <!-- Radio buttons for dividing tax and tip -->
+            <div class="radio-group">
+                <label><input type="radio" name="division" id="evenlyRadio"> Evenly</label>
+                <label><input type="radio" name="division" id="proportionalRadio"> Proportional</label>
+            </div>
+            
+            <div class="modal-buttons">
+                <button class="cancel" id="cancelTaxTipButton">Cancel</button>
+                <button id="applyTaxTipButton">Apply</button>
+            </div>
+        </div>
+    </div> 
+    
+    
+    <!-- Screen 5: Show how much everyone owes -->
+    <div id="screen5" style="display: none;">
+        <h1>How Much Each Person Owes</h1>
+    
+        <!-- Table for displaying who owes how much -->
+        <table id="amountOwedTable">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Amount Owed</th>
+                </tr>
+            </thead>
+            <tbody id="amountOwedList">
+                <!-- Dynamically populated list of amounts owed will go here -->
+            </tbody>
+        </table>
+    
+        <!-- Button to go back or proceed to the next step -->
+        <button id="backButton5">Back</button>
+    </div>
+    
+    
+    
     <script src="app.js"></script>
 </body>
 </html>
