@@ -122,6 +122,7 @@ document.addEventListener('DOMContentLoaded', function() {
             // Add remove button for each name
             const removeButton = document.createElement('span');
             removeButton.textContent = '❌';  // The red "X" symbol
+            removeButton.classList.add('remove-btn'); 
             removeButton.style.color = 'red';  // Set color to red
             removeButton.style.cursor = 'pointer';  // Makes it look clickable
 
@@ -193,8 +194,8 @@ document.addEventListener('DOMContentLoaded', function() {
         isEditing = false; // Reset to add mode
         editRow = null; // Clear the row reference
         document.getElementById('itemModal').style.display = 'none';
+        document.getElementById('numItems').value = 1;
         document.getElementById('itemName').value = '';
-        document.getElementById('numItems').value = '';
         document.getElementById('itemPrice').value = '';
         selectedNames = []; // Reset selected names
     }
@@ -232,8 +233,8 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function saveItem() { // We are either editing a row or creating a new one
-        const itemName = document.getElementById('itemName').value;
         const numItems = document.getElementById('numItems').value;
+        const itemName = document.getElementById('itemName').value;
         const itemPrice = document.getElementById('itemPrice').value;
 
         // Validation to check if all fields are filled and if at least one name is selected
@@ -245,8 +246,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
         if (isEditing) {
             // Update the existing row
-            editRow.cells[0].textContent = itemName;
-            editRow.cells[1].textContent = numItems;
+            editRow.cells[0].textContent = numItems;
+            editRow.cells[1].textContent = itemName;
             editRow.cells[2].textContent = itemPrice;
             editRow.cells[3].textContent = selectedNames.join(', ');
             updateAmountSpent(editRow, "add");
@@ -255,13 +256,13 @@ document.addEventListener('DOMContentLoaded', function() {
             const table = document.getElementById('itemsList');
             const row = table.insertRow();
             row.innerHTML = `
-                <td>${itemName}</td>
                 <td>${numItems}</td>
+                <td>${itemName}</td>
                 <td>${itemPrice}</td>
                 <td>${selectedNames.join(', ')}</td>
                 <td style="text-align:center;">
-                    <button class="editBtn">Edit</button>
-                    <button class="deleteBtn">Delete</button>
+                    <button class="editBtn">✏️</button>
+                    <button class="deleteBtn">❌</button>
                 </td>
             `;
 
@@ -283,14 +284,57 @@ document.addEventListener('DOMContentLoaded', function() {
     function populateNames() {
         const nameContainer = document.getElementById('namesSelection');
         nameContainer.innerHTML = ''; // Clear any existing names
-
+        
+        // Create Select All and Deselect All pills
+        const selectAllPill = document.createElement('div');
+        selectAllPill.classList.add('name-pill', 'control-pill');
+        selectAllPill.textContent = 'Select All';
+        selectAllPill.setAttribute('id', 'selectAllPill');
+    
+        const deselectAllPill = document.createElement('div');
+        deselectAllPill.classList.add('name-pill', 'control-pill');
+        deselectAllPill.textContent = 'Deselect All';
+        deselectAllPill.setAttribute('id', 'deselectAllPill');
+        
+        // Create container for the two control pills
+        const controlContainer = document.createElement('div');
+        controlContainer.classList.add('control-pill-container');
+        
+        // Append both pills to the control container
+        controlContainer.appendChild(deselectAllPill);
+        controlContainer.appendChild(selectAllPill);
+    
+        // Add event listeners to Select All and Deselect All pills
+        selectAllPill.addEventListener('click', () => {
+            const namePills = document.querySelectorAll('.name-pill');
+            const isAllSelected = Array.from(namePills).every(pill => pill.classList.contains('selected'));
+            
+            if (!isAllSelected) {
+                // If not all are selected, select them
+                namePills.forEach(pill => pill.classList.add('selected'));
+                selectedNames = [...peopleNames]; // Add all names to selected names array
+            }
+            // If all are selected, do nothing (i.e., don't unselect them)
+        });
+    
+        deselectAllPill.addEventListener('click', () => {
+            const namePills = document.querySelectorAll('.name-pill');
+            namePills.forEach(pill => pill.classList.remove('selected'));
+            selectedNames = []; // Clear selected names array
+        });
+        
+        // Create a container for the name pills
+        const pillContainer = document.createElement('div');
+        pillContainer.classList.add('pill-grid');
+        
+        // Create the name pills dynamically
         peopleNames.forEach(name => {
             const namePill = document.createElement('div');
             namePill.classList.add('name-pill');
             namePill.textContent = name;
             namePill.setAttribute('data-name', name);
-
-            // Add click event to toggle selection
+            
+            // Add click event to toggle selection of individual name pills
             namePill.addEventListener('click', () => {
                 namePill.classList.toggle('selected');
                 const name = namePill.getAttribute('data-name');
@@ -300,11 +344,15 @@ document.addEventListener('DOMContentLoaded', function() {
                     selectedNames = selectedNames.filter(selected => selected !== name);
                 }
             });
-
-            nameContainer.appendChild(namePill);
+    
+            pillContainer.appendChild(namePill);
         });
+        
+        // Append everything to the main container
+        nameContainer.appendChild(pillContainer);
+        nameContainer.appendChild(controlContainer);  // Add the control buttons (Select All, Deselect All)
     }
-
+    
     function updateAmountSpent(row, operation){
         const costOfItem = row.cells[2].textContent;
         const boughtItem = row.cells[3].textContent.split(', ');
