@@ -65,7 +65,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function openNameModal() {
         if (peopleNames.length == numPeople) {
-            alert(`You've already added ${numPeople} names.Go back to change the number of people or press "Next" to Proceed.`);
+            alert(`You've already added ${numPeople} names. Press "Next" to proceed or go back to change the number of people.`);
             return;
         }
 
@@ -152,7 +152,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('nextButton2').addEventListener('click', function() {
         if (peopleNames.length != numPeople) {
             const remainingNames = numPeople - peopleNames.length;
-            alert(`You haven't added all the names. Please add ${remainingNames} more name(s).`);
+            const keyword = (remainingNames > 0) ?  "add " : "remove" 
+            alert(`Invalid number of names inputted. Please ${keyword} ${Math.abs(remainingNames)} name(s).`);
             return;
         }
         

@@ -1,7 +1,6 @@
 /* Simple styling for clarity */
 body {
     font-family: Arial, sans-serif;
-    padding: 20px;
     margin: 0;
     background-color: #f4f4f4;
 }
@@ -338,7 +337,7 @@ input {
 
 #nameModal .name-row label {
     margin-right: 10px;  /* Space between the label and the input */
-    width: 80px;  /* Fixed width for the label */
+    min-width: 80px;  /* Fixed width for the label */
 }
 
 #nameModal .name-row input {
