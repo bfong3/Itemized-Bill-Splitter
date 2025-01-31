@@ -39,23 +39,18 @@ document.addEventListener('DOMContentLoaded', function() {
     // Screen 1 (Number of Ppl Screen)
     // ============================
 
-    function enterNumberOfPeople() {
-        numPeople = document.getElementById('numPeople').value; 
-        if (!numPeople || numPeople < 1 || numPeople > 16) {
-            alert("Please enter a valid number of people (1-16).");
-            return;
-        }
+    const numPeopleSelect = document.getElementById('numPeople');
 
-        // Edge Case: Person went back and reduced the number of ppl
-        if(peopleNames.length > numPeople){ 
-            peopleNames = peopleNames.slice(0, numPeople);
-            updateNamesList();
-        }
+    for (let i = 1; i <= 16; i++) {
+        const option = document.createElement('option');
+        option.value = i;
+        option.textContent = i;
+        numPeopleSelect.appendChild(option);
     }
 
     // When the "Next" button is clicked on Screen 1
     document.getElementById('nextButton1').addEventListener('click', function() {
-        enterNumberOfPeople();
+        numPeople = parseInt(document.getElementById('numPeople').value);
         handleScreenNavigation('nextButton1');
     });
 
@@ -66,57 +61,87 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ============================
     // Screen 2 (Add Names Screen)
-    // ============================
+    // ============================   
 
-    function addName() {
-        const nameInput = document.getElementById('nameInput').value; // Get input name and remove extra spaces
-
-        if (nameInput === "") {
-            alert("Please enter a name.");
+    function openNameModal() {
+        if (peopleNames.length == numPeople) {
+            alert(`You've already added ${numPeople} names.Go back to change the number of people or press "Next" to Proceed.`);
             return;
         }
 
-        if (peopleNames.length >= numPeople) {
-            alert("You have already added all the names.");
-            return;
+        const modal = document.getElementById('nameModal');
+        const container = document.getElementById('nameRowsContainer');
+        container.innerHTML = ''; // Clear previous rows if the modal was opened before
+    
+        // Create the specified number of rows for name input
+        for (let i = 1; i <= numPeople - peopleNames.length; i++) {
+            const row = document.createElement('div');
+            row.classList.add('name-row');
+            
+            row.innerHTML = `
+                <label for="name${i}">Name ${i}:</label>
+                <input type="text" id="name${i}" name="name${i}" placeholder="Enter name">
+            `;
+            
+            container.appendChild(row);
         }
+    
+        modal.style.display = 'block';  // Show the modal
+    }
 
-        // Add name to the list
-        peopleNames.push(nameInput);
-        updateNamesList(); // Update the displayed list of names
+    function closeNameModal() {
+        nameModal.style.display = 'none'; // Hide the modal
+    }
 
-        // Clear the input field after adding the name
-        document.getElementById('nameInput').value = '';
+     // Function to update the list of names displayed on the screen
+     function saveNames() {
+        const nameInputs = document.querySelectorAll('#nameRowsContainer input');
+
+        // Add all new names to peopleNames array
+        nameInputs.forEach(input => {
+            const name = input.value.trim();
+            if (name) {
+                peopleNames.push(name);  // Add non-empty names to the array
+            }
+        });
+
+        // Update the sidebar to reflect the new list
+        updateNameSidebar();
+
+        closeNameModal();
+    }
+
+    function updateNameSidebar() {
+        const nameList = document.getElementById('namesList');
+        nameList.innerHTML = '';  // Clear the list before updating
+    
+        peopleNames.forEach((name, index) => {
+            const listItem = document.createElement('li');
+            listItem.textContent = `${index + 1}. ${name}`;
+    
+            // Add remove button for each name
+            const removeButton = document.createElement('span');
+            removeButton.textContent = '❌';  // The red "X" symbol
+            removeButton.style.color = 'red';  // Set color to red
+            removeButton.style.cursor = 'pointer';  // Makes it look clickable
+
+            removeButton.addEventListener('click', function() {
+                // Remove the name from the array
+                peopleNames.splice(index, 1);
+                updateNameSidebar();  // Re-render the updated list
+            });
+    
+            listItem.appendChild(removeButton);
+            nameList.appendChild(listItem);
+        });
     }
 
     // When the "Add Name" button is clicked
-    document.getElementById('addNameButton').addEventListener('click', function() {
-        addName();
-    });
+    document.getElementById('addNameButton').addEventListener('click', openNameModal);
 
-    // Function to update the list of names displayed on the screen
-    function updateNamesList() {
-        const namesList = document.getElementById('namesList');
-        namesList.innerHTML = ''; // Clear the list before updating it
+    document.getElementById('saveNamesButton').addEventListener('click', saveNames);
 
-        // Create list items for each name and append them
-        peopleNames.forEach((name, index) => {
-            const listItem = document.createElement('li');
-            listItem.textContent = name;
-
-            // Add a remove button for each name
-            const removeButton = document.createElement('button');
-            removeButton.textContent = "Remove";
-            removeButton.addEventListener('click', function() {
-                // Remove name from the array and update the list
-                peopleNames.splice(index, 1);
-                updateNamesList(); // Re-render the list
-            });
-
-            listItem.appendChild(removeButton);
-            namesList.appendChild(listItem);
-        });
-    }
+    document.getElementById('closeModalButton').addEventListener('click', closeNameModal);
 
     // When the "Back" button is clicked on Screen 2
     document.getElementById('backButton2').addEventListener('click', function() {
@@ -140,6 +165,9 @@ document.addEventListener('DOMContentLoaded', function() {
         // Proceed to the next screen (screen3)
         handleScreenNavigation('nextButton2');
     });
+
+    
+
 
     // ============================
     // Screen 3 (Filler For now)

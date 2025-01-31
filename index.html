@@ -11,31 +11,58 @@
     <!-- Get Started Screen (Screen 0) -->
     <div id="screen0">
         <h1>Welcome to the Split Bill Tool!</h1>
-        <p>This tool allows for you and your group to split the bill perfectly; whether everyone got their own thing or only some people shared select dishes. Click "Start" to begin.</p>
+        <p>This tool allows for you and your group to split the bill perfectly; whether everyone got their own thing or only some people shared select dishes.</p>
         <button id="startButton">Start</button>
     </div>
 
     <!-- Screen 1: Number of People -->
     <div id="screen1" style="display: none;">
         <h1>Enter the Number of People</h1>
-        <input type="number" id="numPeople" placeholder="Enter a number (1-16)" min="1" max="16">
-        <button class="backButton" id="backButton1">Back</button>
-        <button class="nextButton" id="nextButton1">Next</button>
+        <label for="numPeople">Select the number of people:</label>
+        <select id="numPeople">
+            <!-- Options will be dynamically added -->
+        </select>
+
+        <div>
+            <button class="backButton" id="backButton1">Back</button>
+            <button class="nextButton" id="nextButton1">Next</button>
+        </div>
+        
     </div>
 
     <!-- Screen 2: Add Names of Everyone -->
     <div id="screen2" style="display: none;">
-        <h1>Enter Everyone's Name</h1>
-        <input type="text" id="nameInput" placeholder="Enter a name">
-        <button class="nextButton" id="addNameButton">Add Name</button>
-        
-        <h2>Names List:</h2>
-        <ul id="namesList"></ul> <!-- This is where the names will be displayed -->
+        <div class="content-container">
+            <!-- Main Content -->
+            <div class="main-content">
+                <h1>Enter Everyone's Name</h1>
+                <button class="nextButton" id="addNameButton">Add Name</button>
 
-        <button class="backButton" id="backButton2">Back</button>
-        <button class="nextButton" id="nextButton2">Next</button>
+                <div>
+                    <button class="backButton" id="backButton2">Back</button>
+                    <button class="nextButton" id="nextButton2">Next</button>
+                </div>
+            </div>
+
+            <!-- Sidebar for Names -->
+            <div id="nameSidebar">
+                <h2>Names</h2>
+                <ul id="namesList"></ul> <!-- Keep using this ID -->
+            </div>
+        </div>
     </div>
 
+    <div id="nameModal" class="modal" style="display: none;">
+        <div class="modal-container">
+            <h2>Add Names</h2>
+            <div id="nameRowsContainer">
+                <!-- Dynamically added rows will appear here -->
+            </div>
+            <button id="closeModalButton">Close</button>
+            <button id="saveNamesButton">Save Names</button>            
+        </div>
+    </div>
+    
     <!-- Screen 3: Manually or Image -->
     <div id="screen3" style="display: none;">
         <h1>This is a filler screen for when I added manually adding or uploading. Just press Next</h1>
