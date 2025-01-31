@@ -202,8 +202,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
     function repopulateModalFields(row){
         // Populate modal fields with existing row data
-        document.getElementById('itemName').value = row.cells[0].textContent;
-        document.getElementById('numItems').value = row.cells[1].textContent;
+        document.getElementById('numItems').value = row.cells[0].textContent;
+        document.getElementById('itemName').value = row.cells[1].textContent;
         document.getElementById('itemPrice').value = row.cells[2].textContent;
     
         // Reselect names
@@ -276,7 +276,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         resetModalState();
-        console.log("Amount Spent by Each Person:");
         console.table(amountSpent);
     }
     
@@ -354,7 +353,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     function updateAmountSpent(row, operation){
-        const costOfItem = row.cells[2].textContent;
+        const costOfItem = parseFloat(row.cells[2].textContent);
         const boughtItem = row.cells[3].textContent.split(', ');
         const costPerPerson = costOfItem / boughtItem.length;
 
@@ -395,9 +394,12 @@ document.addEventListener('DOMContentLoaded', function() {
         // Proceed with the tax and tip logic (divide them based on selected method)
         if (isProportional) {
             Object.keys(amountSpent).forEach(key => {
-                const personPercentage = amountSpent[key].value / totalCost;
+                const personPercentage = amountSpent[key] / totalCost;
+                console.log(`${key} has ${personPercentage * 100}% of the total cost.`);
                 const addedAmount = personPercentage * taxAndTip;
+                console.log(`${key} has gained ${addedAmount} of the ${taxAndTip} tax and tip.`);
                 amountSpent[key] += add ? addedAmount : -addedAmount;
+                
             });
             console.log('Applying proportional division...');
         } 
@@ -411,6 +413,18 @@ document.addEventListener('DOMContentLoaded', function() {
         totalCost += add ? taxAndTip : -taxAndTip;;
     }
 
+    function deleteTable(){
+        if (confirm("Are you sure you want to do back? All items will be removed.")) {
+            const tableBody = document.getElementById('itemsList');
+            tableBody.innerHTML = ''; // Removes all rows in the table
+
+            // Reset dictionary values to 0
+            Object.keys(amountSpent).forEach(key => {
+                amountSpent[key] = 0;
+            });
+            totalCost = 0;
+        }
+    }
 
     // Show the modal and populate names when adding a new item
     document.getElementById('addItemButton').addEventListener('click', function() {
@@ -441,20 +455,12 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     document.getElementById('backButton4').addEventListener('click', function() {
-        if (confirm("Are you sure you want to do back? All items will be removed.")) {
-            const tableBody = document.getElementById('itemsList');
-            tableBody.innerHTML = ''; // Removes all rows in the table
-
-            // Reset dictionary values to 0
-            Object.keys(amountSpent).forEach(key => {
-                amountSpent[key] = 0;
-            });
-            totalCost = 0;
-            handleScreenNavigation('backButton4');
-        }
+        deleteTable();
+        handleScreenNavigation('backButton4');
     });
 
     document.getElementById('nextButton4').addEventListener('click', function() {
+        console.log(`This is the total cost: ${totalCost}`);
         document.getElementById('taxTipModal').style.display = 'block';
         document.querySelector('.modal-container').style.display = 'block'; 
     });
@@ -485,6 +491,15 @@ document.addEventListener('DOMContentLoaded', function() {
             amountOwedTable.appendChild(row);
         });
     }
+
+    function resetEverything(){
+        numPeople = 0; // Number of ppl
+        peopleNames = []; // Names of ppl
+        amountSpent = {}; // How much each person spent
+        totalCost = 0; // Cost of Bill
+        updateNameSidebar();
+        deleteTable();
+    }
     
     document.getElementById('backButton5').addEventListener('click', function() {
         // Navigate back to screen 4
@@ -492,6 +507,10 @@ document.addEventListener('DOMContentLoaded', function() {
         handleScreenNavigation('backButton5', 'screen4');
     });
     
-    
+    document.getElementById('homeButton').addEventListener('click', function() {
+        // Navigate back to screen 0
+        resetEverything();
+        toggleScreens("screen5", "screen0");
+    });
 
 });

@@ -252,6 +252,18 @@ button:hover {
     font-size: 16px;  /* Slightly larger font size for readability */
 }
 
+#taxTipModal .modal-container .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px; /* Space between label and input */
+    margin-bottom: 12px;
+}
+
+#taxTipModal .modal-container label {
+    font-weight: bold;
+    white-space: nowrap; /* Prevents text from wrapping */
+}
+
 #taxTipModal .modal-container h2 {
     text-align: center;
     margin-bottom: 10px;
@@ -285,7 +297,7 @@ button:hover {
 
 #taxTipModal .modal-buttons button {
     padding: 10px 20px;
-    background-color: #007bff;
+    background-color: #4CAF50;
     color: white;
     border: none;
     border-radius: 5px;
@@ -295,13 +307,36 @@ button:hover {
 }
 
 #taxTipModal .modal-buttons button:hover {
-    background-color: #0056b3;
+    background-color: #45a049;
 }
 
+#taxTipModal .pill-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
 
-/* DONT TOUCH THE SHIT HERE*/
+#taxTipModal .pill {
+    padding: 8px 20px;
+    border: 1px solid #ccc;
+    border-radius: 20px;
+    background-color: white;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s, color 0.3s;
+}
 
-/* Ensure screen2 content and sidebar are side by side */
+#taxTipModal .pill.selected {
+    background-color: #4CAF50;
+    color: white;
+    border: 1px solid #4CAF50;
+}
+
+#taxTipModal .pill:hover {
+    background-color: #e0e0e0;
+}
+
 /* Main layout */
 .content-container {
     display: flex;
@@ -422,28 +457,6 @@ button:hover {
     border-radius: 4px;
 }
 
-/* Modal Buttons Section */
-#nameModal .modal-buttons {
-    display: flex;
-    justify-content: space-between;
-}
-
-/* Buttons for Save and Close */
-#nameModal .modal-buttons button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 48%; /* Buttons will take up nearly half the space each */
-    font-size: 16px;
-}
-
-#nameModal .modal-buttons button:hover {
-    background-color: #0056b3;
-}
-
 #nameModal .name-row {
     display: flex;
     align-items: center;  /* Aligns items vertically in the center */
@@ -498,4 +511,44 @@ label {
     border: 1px solid #ccc;
     width: 250px; /* Increased width */
     margin-bottom: 20px;
+}
+
+#amountOwedTable {
+    width: 100%;
+    border-collapse: collapse; /* Ensures borders collapse into a single line */
+    margin-top: 20px; /* Space above the table */
+    font-family: Arial, sans-serif; /* Change font to a clean sans-serif */
+}
+
+#amountOwedTable th, #amountOwedTable td {
+    padding: 12px 15px; /* Add padding for spacing */
+    text-align: left; /* Align text to the left for both columns */
+    border: 1px solid #ddd; /* Light grey border */
+}
+
+#amountOwedTable th {
+    background-color: #4CAF50; /* Green background for header */
+    color: white; /* White text for header */
+    font-size: 18px; /* Slightly larger font for headers */
+}
+
+#amountOwedTable tbody tr:nth-child(odd) {
+    background-color: #f9f9f9; /* Light grey for odd rows */
+}
+
+#amountOwedTable tbody tr:nth-child(even) {
+    background-color: #fff; /* White for even rows */
+}
+
+#amountOwedTable tbody tr:hover {
+    background-color: #e0f7fa; /* Light blue background on hover */
+    cursor: pointer; /* Change cursor to pointer for clickable rows */
+}
+
+#amountOwedTable td {
+    font-size: 16px; /* Adjust font size for the content */
+}
+
+#amountOwedTable td:first-child {
+    font-weight: bold; /* Make the name column bold */
 }
