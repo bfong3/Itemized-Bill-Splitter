@@ -51,6 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     // When the "Next" button is clicked on Screen 1
     document.getElementById('nextButton1').addEventListener('click', function() {
         numPeople = parseInt(document.getElementById('numPeople').value);
+        console.log(`This is the new numPeople ${numPeople}`);
         handleScreenNavigation('nextButton1');
     });
 
@@ -68,7 +69,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert(`You've already added ${numPeople} names. Press "Next" to proceed or go back to change the number of people.`);
             return;
         }
-
+        console.log(`The name modal is open`);
         const modal = document.getElementById('nameModal');
         const container = document.getElementById('nameRowsContainer');
         container.innerHTML = ''; // Clear previous rows if the modal was opened before
@@ -87,6 +88,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     
         modal.style.display = 'block';  // Show the modal
+        console.log(`The name modal should be showing`);
     }
 
     function closeNameModal() {
@@ -153,7 +155,7 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('nextButton2').addEventListener('click', function() {
         if (peopleNames.length != numPeople) {
             const remainingNames = numPeople - peopleNames.length;
-            const keyword = (remainingNames > 0) ?  "add " : "remove" 
+            const keyword = (remainingNames > 0) ?  "add" : "remove" 
             alert(`Invalid number of names inputted. Please ${keyword} ${Math.abs(remainingNames)} name(s).`);
             return;
         }
@@ -491,15 +493,6 @@ document.addEventListener('DOMContentLoaded', function() {
             amountOwedTable.appendChild(row);
         });
     }
-
-    function resetEverything(){
-        numPeople = 0; // Number of ppl
-        peopleNames = []; // Names of ppl
-        amountSpent = {}; // How much each person spent
-        totalCost = 0; // Cost of Bill
-        updateNameSidebar();
-        deleteTable();
-    }
     
     document.getElementById('backButton5').addEventListener('click', function() {
         // Navigate back to screen 4
@@ -508,9 +501,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
     
     document.getElementById('homeButton').addEventListener('click', function() {
-        // Navigate back to screen 0
-        resetEverything();
-        toggleScreens("screen5", "screen0");
+        location.reload();
     });
 
 });
